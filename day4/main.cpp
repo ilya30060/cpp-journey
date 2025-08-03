@@ -32,15 +32,13 @@ public:
         return *this;
     }
     
-    T* begin(void)
-    {
-        return _data.get();
-    }
+    T* begin(void) {return _data.get();}
+    const T* begin(void) const noexcept {return _data.get();}
 
-    T* end(void)
-    {
-        return _data.get() + _size;
-    }
+
+    T* end(void) { return _data.get() + _size; }
+    const T* end(void) const noexcept { return _data.get() + _size; }
+
 
     T& at(const size_t index)
     {
@@ -53,7 +51,18 @@ public:
             throw std::out_of_range("GenericArray::at(): invalid index.\n");
         }
     }
-    
+    const T& at(const size_t index) const noexcept
+    {
+        if (index >= 0 && index < _size)
+        {
+            return _data[index];
+        }
+        else
+        {
+            throw std::out_of_range("GenericArray::at(): invalid index.\n");
+        }
+    }
+
     void resize(const size_t new_size)
     {
         size_t min_size = std::min(_size, new_size);
